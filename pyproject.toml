@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "ocita-ai-2b-maths"
+version = "0.1.0"
+description = "A 2 billion parameter AI model trained to solve math problems, with English chat interface"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+dependencies = [
+    "torch>=2.0.0",
+    "transformers>=4.35.0",
+    "datasets>=2.14.0",
+    "tokenizers>=0.15.0",
+    "accelerate>=0.24.0",
+    "safetensors>=0.4.0",
+    "pyyaml>=6.0",
+    "numpy>=1.24.0",
+    "tqdm>=4.65.0",
+    "sentencepiece>=0.1.99",
+]
+
+[project.scripts]
+ocita-chat = "ocita_math.inference.chat:main"
+ocita-train = "ocita_math.training.train:main"
