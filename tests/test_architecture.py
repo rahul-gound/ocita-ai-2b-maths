@@ -55,9 +55,8 @@ class TestMathAttention:
         config = _small_config()
         attn = MathAttention(config)
         x = torch.randn(1, 4, 64)
-        mask = torch.triu(torch.ones(4, 4), diagonal=1).masked_fill(
-            torch.triu(torch.ones(4, 4), diagonal=1) == 1, float("-inf")
-        ).unsqueeze(0).unsqueeze(0)
+        causal = torch.triu(torch.ones(4, 4), diagonal=1)
+        mask = causal.masked_fill(causal == 1, float("-inf")).unsqueeze(0).unsqueeze(0)
         out = attn(x, attention_mask=mask)
         assert out.shape == (1, 4, 64)
 
