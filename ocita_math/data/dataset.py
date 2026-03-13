@@ -85,7 +85,7 @@ def load_and_tokenize_dataset(
     """
     from datasets import load_dataset
 
-    dataset = load_dataset(dataset_name, split=split)
+    dataset = load_dataset(dataset_name, "main", split=split)
 
     if max_samples is not None:
         dataset = dataset.select(range(min(max_samples, len(dataset))))
