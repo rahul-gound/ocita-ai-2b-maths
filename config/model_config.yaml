@@ -1,0 +1,54 @@
+# Ocita AI 2B Maths - Model Configuration
+# A ~2 billion parameter transformer model for mathematical reasoning
+
+model:
+  name: "ocita-2b-maths"
+  vocab_size: 50304          # Rounded to multiple of 64 for efficiency
+  hidden_size: 2048
+  intermediate_size: 8192    # 4x hidden_size (FFN expansion)
+  num_hidden_layers: 32
+  num_attention_heads: 16
+  max_position_embeddings: 2048
+  hidden_dropout_prob: 0.0
+  attention_dropout_prob: 0.0
+  layer_norm_epsilon: 1.0e-5
+  use_rotary_embeddings: true
+  tie_word_embeddings: true
+
+training:
+  learning_rate: 3.0e-4
+  min_learning_rate: 3.0e-5
+  warmup_steps: 2000
+  max_steps: 100000
+  batch_size: 32
+  gradient_accumulation_steps: 8
+  max_grad_norm: 1.0
+  weight_decay: 0.1
+  adam_beta1: 0.9
+  adam_beta2: 0.95
+  adam_epsilon: 1.0e-8
+  lr_scheduler: "cosine"
+  fp16: false
+  bf16: true
+  seed: 42
+
+data:
+  max_seq_length: 2048
+  train_split: "train"
+  eval_split: "validation"
+  math_datasets:
+    - "gsm8k"
+    - "math_dataset"
+    - "competition_math"
+
+chat:
+  system_prompt: >
+    You are Ocita, a helpful AI math assistant. You solve math problems
+    step by step, showing clear reasoning. You communicate in English only.
+    When presented with a math problem, break it down into steps and provide
+    the final answer clearly.
+  max_new_tokens: 1024
+  temperature: 0.7
+  top_p: 0.9
+  top_k: 50
+  repetition_penalty: 1.1
